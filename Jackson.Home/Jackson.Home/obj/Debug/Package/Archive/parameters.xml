@@ -1,0 +1,15 @@
+﻿<parameters>
+  <parameter name="IIS Web Application Name" defaultValue="Default Web Site/Jackson.Home_deploy" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Jackson\\Documents\\Visual\ Studio\ 2013\\Projects\\Jackson\.Home\\Jackson\.Home\\obj\\Debug\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Jackson\\Documents\\Visual\ Studio\ 2013\\Projects\\Jackson\.Home\\Jackson\.Home\\obj\\Debug\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="Add write permission to App_Data Folder" description="Add write permission to App_Data folder" defaultValue="{IIS Web Application Name}/App_Data" tags="Hidden">
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Jackson\\Documents\\Visual\ Studio\ 2013\\Projects\\Jackson\.Home\\Jackson\.Home\\obj\\Debug\\Package\\PackageTmp\\App_Data$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\aspnet-Jackson.Home-20140224022231.mdf;Initial Catalog=aspnet-Jackson.Home-20140224022231;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Jackson\\documents\\visual\ studio\ 2013\\Projects\\Jackson\.Home\\Jackson\.Home\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="BlogDbConnectionString-Web.config Connection String" description="BlogDbConnectionString Connection String used in web.config by the application to access the database." defaultValue="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\BlogDb.mdf;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Jackson\\documents\\visual\ studio\ 2013\\Projects\\Jackson\.Home\\Jackson\.Home\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='BlogDbConnectionString']/@connectionString" />
+  </parameter>
+</parameters>

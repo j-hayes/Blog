@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="BlogDbConnectionString-Web.config Connection String" description="BlogDbConnectionString Connection String used in web.config by the application to access the database." defaultValue="Data Source=jacksonblogdb.c26pnm7vltkl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=BlogDb;User ID=jacksonH;Password=jh01123581321" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Jackson\\documents\\visual\ studio\ 2013\\Projects\\Jackson\.Home\\Jackson\.Home\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='BlogDbConnectionString']/@connectionString" />
+  </parameter>
+</parameters>

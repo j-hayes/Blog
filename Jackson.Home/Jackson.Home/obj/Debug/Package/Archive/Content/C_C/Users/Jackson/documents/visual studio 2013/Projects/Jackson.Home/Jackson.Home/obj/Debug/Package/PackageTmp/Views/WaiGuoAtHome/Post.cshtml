@@ -1,0 +1,34 @@
+﻿@model Jackson.DAL.BlogPost
+
+@{
+    ViewBag.Title = "Post";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Post</h2>
+
+<div>
+    <h4>BlogPost</h4>
+	<hr />
+    <div class="recentBlogRow homeRow">
+        <div class="container">
+            <div class="col-xs-12 col-md-offset-2 col-md-8">
+                <div class="container" style="min-height: 500px;">
+                    <h3>Wai Guo at Home's Most Recent Ramblings</h3>
+                    <div class="col-xs-4 col-md-4"><img class="img-responsive img-rounded homePhoto100" src="~/Content/images/@Model.Image" /></div>
+                    <div class="col-xs-8 col-md-8" style="word-wrap: break-word"><p>@Html.DisplayFor(model => model.Post)</p></div>
+                    <div class="row" style="padding-top:10px">
+                        <div class="col-xs-8">Date Posted: @Html.DisplayFor(model => model.DateTime)</div>
+                    </div>
+
+                </div>
+               
+            </div>
+
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {  id = Model.OID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

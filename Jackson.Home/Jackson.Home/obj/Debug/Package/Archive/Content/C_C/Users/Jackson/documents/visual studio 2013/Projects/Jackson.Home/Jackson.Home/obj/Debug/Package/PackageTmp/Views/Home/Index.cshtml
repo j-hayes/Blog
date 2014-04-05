@@ -1,0 +1,136 @@
+﻿@model Jackson.Home.Models.HomePageViewModel
+
+@{
+    ViewBag.Title = "John (Jackson) Joseph Hayes Jr.";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+
+
+<div id="" class="homeHeaderRow ">
+    <div id="" class="col-xs-12 col-md-offset-2 col-md-8">
+        <div class="container">
+            <div class="col-xs-12 col-md-6 col-md-offset-3 ">
+                <br />
+                <br />
+                <br />
+                <h1>Jackson Hayes</h1>
+                <h3>Student, Software Developer etc.</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="aboutMeRow homeRow">
+    <div class="container">
+        <div class="col-sm-12 col-md-8 col-md-offset-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <p class="lead">
+                            I am Jackson Hayes. I am a student, software developer and business analyst from Champaign, IL living in
+                            Chicago, IL. I build apps, make websites. My blog content is sparce, my social media contributions are few and far between.
+                            I have a passion for everything China.
+                        </p>
+
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <img src="~/Content/images/headShot1.jpg" class="img-responsive img-circle homeHeadShot">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12"></div>
+                    <ul class="lead">
+                        <li>
+                            Loyola University Chicago Senior
+                            <ul>
+                                <li>Computer Science</li>
+                                <li>Business Information Systems</li>
+                            </ul>
+                        </li>
+                        <li>汉语学生 (Chinese Language Student)</li>
+                        <li>Neckwear Enthusiest</li>
+                        <li>.NET Fanboy</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="socialContainer" style="padding-top: 10px;">
+    <div class="container">
+        <div class="col-xs-12 col-md-offset-2 col-md-8 ">
+            <div class="col-xs-12">
+                <a href="https://twitter.com/objectivejohn" class="btn btn-github socialButton"><i class="fa fa-twitter"></i></a>
+                <a href="https://github.com/j-hayes" class="btn btn-github socialButton"><i class="fa fa-github"></i></a>
+                <a href="https://linkedin.com/in/jacksonjhayes" class="btn btn-github socialButton"><i class="fa fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="recentBlogRow homeRow">
+    <div class="container">
+        <div class="col-xs-12 col-md-offset-2 col-md-8">
+            <div class="container" style="min-height: 500px;">
+                <h3>Wai Guo at Home's Most Recent Ramblings</h3>
+                <h4>@Model.MostRecentBlogPost.Title</h4>
+                <div class="col-xs-4 col-md-4"><img class="img-responsive img-rounded homePhoto100" src="~/Content/images/@Model.MostRecentBlogPost.Image" /></div>
+                <div class="col-xs-8 col-md-8" style="word-wrap: break-word">@Html.Raw(Model.MostRecentBlogPost.Post)</div>
+                <div class="row" style="padding-top:10px">
+                    <div class="col-xs-8"><p>Date Posted: @Html.Raw(Model.MostRecentBlogPost.Date.ToShortDateString())</p></div>
+                </div>
+
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-xs-3"><a href="/Views/WGAH" class="btn btn-github socialButton"><i class="fa fa-book"></i> | More Ramblings</a></div>
+            </div>
+            <div class="row">
+                <h3>Daily 4 character idiom</h3>
+                <script type="text/javascript" src="http://www.chinese-tools.com/scripts/chengyuoftheday.js"></script>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="flashCardProjectRow homeRow">
+    <div class="container">
+        <h2>Projects</h2>
+        <div id="" class="col-xs-12 col-sm-offset-2 col-sm-8 ">
+
+            <div class="container">
+                <h2>MVVMCross Chinese Flash Card Applicaiton</h2>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <img class="img-responsive img-rounded" src="~/Content/images/FlashCardAppDictionary.png" />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <img class="img-responsive img-rounded col-sm-offset-1 " src="~/Content/images/FlashCardAppStudySet.png" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>
+                            <ul class="lead">
+                                <li>I set out with this application to create a free flashcard study application for chinese characters.</li>
+                                <li>The most important feature is that you can create flashcards directly from dictionary entries.</li>
+                                <li>Currently the project is being built for Windows 8 Store.</li>
+                                <li>Future iPhone, Android, and Windows Phone apps are in the works.</li>
+                            </ul>
+                        </p>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

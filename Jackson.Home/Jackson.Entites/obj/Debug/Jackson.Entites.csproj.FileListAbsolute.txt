@@ -1,0 +1,26 @@
+C:\Users\Jackson\documents\visual studio 2013\Projects\Jackson.Home\Jackson.Entites\bin\Debug\Jackson.Entites.dll
+C:\Users\Jackson\documents\visual studio 2013\Projects\Jackson.Home\Jackson.Entites\bin\Debug\Jackson.Entites.pdb
+C:\Users\Jackson\documents\visual studio 2013\Projects\Jackson.Home\Jackson.Entites\obj\Debug\Jackson.Entites.csprojResolveAssemblyReference.cache
+C:\Users\Jackson\documents\visual studio 2013\Projects\Jackson.Home\Jackson.Entites\obj\Debug\Jackson.Entites.dll
+C:\Users\Jackson\documents\visual studio 2013\Projects\Jackson.Home\Jackson.Entites\obj\Debug\Jackson.Entites.pdb
+C:\Users\Jackson\documents\visual studio 2013\Projects\Jackson.Home\Jackson.Entites\bin\Debug\NDatabase3.dll
+C:\Users\Jackson\documents\visual studio 2013\Projects\Jackson.Home\Jackson.Entites\bin\Debug\NDatabase3.pdb
+C:\Users\Jackson\documents\visual studio 2013\Projects\Jackson.Home\Jackson.Entites\bin\Debug\NDatabase3.xml
+C:\Users\Jackson\Documents\Visual Studio 2013\Projects\Jackson.Home\Jackson.Entites\bin\Debug\Jackson.Entites.dll.config
+C:\Users\Jackson\Documents\Visual Studio 2013\Projects\Jackson.Home\Jackson.Entites\bin\Debug\EntityFramework.dll
+C:\Users\Jackson\Documents\Visual Studio 2013\Projects\Jackson.Home\Jackson.Entites\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Jackson\Documents\Visual Studio 2013\Projects\Jackson.Home\Jackson.Entites\bin\Debug\EntityFramework.xml
+C:\Users\Jackson\Documents\Visual Studio 2013\Projects\Jackson.Home\Jackson.Entites\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\bin\Debug\Jackson.Entites.dll.config
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\bin\Debug\Jackson.Entites.dll
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\bin\Debug\Jackson.Entites.pdb
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\bin\Debug\EntityFramework.dll
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\bin\Debug\NDatabase3.dll
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\bin\Debug\EntityFramework.xml
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\bin\Debug\NDatabase3.pdb
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\bin\Debug\NDatabase3.xml
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\obj\Debug\Jackson.Entites.csprojResolveAssemblyReference.cache
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\obj\Debug\Jackson.Entites.dll
+C:\Users\john\Documents\GitHub\Blog\Blog_JJH\Jackson.Home\Jackson.Entites\obj\Debug\Jackson.Entites.pdb
