@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/social-buttons-3.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Scripts/tinymce/tinymce.js"></script> 
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+        });
+    </script>
+    <style type="text/css">
+        html {
+            width: auto;
+            overflow-x: hidden;
+        }
+
+        body {
+            padding-top: 0px;
+            padding-bottom: 40px;
+            width: auto;
+        }
+
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, ul, li, .text {
+            font-family: "Courier New", Courier, monospace;
+        }
+
+
+        /*Jackson added
+            */
+        .homeHeaderRow {
+            height: 500px;
+            width: 100%;
+            background-image: url('/Content/images/DanceYunnan.jpg');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: white;
+        }
+
+        .homeHeadShot {
+            width: 100%;
+        }
+
+
+
+        .aboutMeRow {
+            padding-top: 50px;
+            background: white;
+            color: #0248ED;
+        }
+
+        .socialContainer {
+            background-color: white;
+            color: #f2f2f2;
+            padding-bottom: 10px;
+        }
+
+        .socialButton {
+            font-size: 14px;
+        }
+
+        .homeRow {
+        }
+
+        .homeMainContainer {
+            background: white;
+            padding-bottom: 10px;
+        }
+
+        .recentBlogRow {
+            background-color: #0248ED; /*FF4545;*/
+            color: white;
+            padding-bottom: 10px;
+        }
+
+        .flashCardProjectRow {
+            background-color: #4617B4;
+            color: white;
+            padding-bottom: 10px;
+        }
+
+        .projectScreenShotW8 {
+        }
+
+        .homePhoto100 {
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="">
+        @RenderBody()
+    </div>
+    <hr />
+    <footer class="modal-footer">
+        <p>&copy; John Joseph Hayes, Jr. @System.DateTime.Now.ToString("yyyy")</p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

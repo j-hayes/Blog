@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Siaqodb</id>
+    <version>4.0.0.7</version>
+    <title>Siaqodb</title>
+    <authors>Dotissi</authors>
+    <owners>Dotissi</owners>
+    <licenseUrl>http://siaqodb.com/Documentation/EULA.rtf</licenseUrl>
+    <projectUrl>http://siaqodb.com/</projectUrl>
+    <iconUrl>http://siaqodb.com/siaqodb.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Siaqodb is a NoSQL embedded object &amp; document database engine that currently runs on .NET, .NET for WinRT, Mono,MonoMac, Silverlight,Windows Phone 7 and 8, Xamarin.iOS, Xamarin.Android, Unity3D</description>
+    <summary>NoSQL embedded database for .NET</summary>
+    <releaseNotes />
+    <copyright>Copyright © Dotissi 2014</copyright>
+    <language />
+    <tags>nosql embedded database</tags>
+  </metadata>
+</package>

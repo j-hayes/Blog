@@ -1,0 +1,75 @@
+﻿@using System.Web.UI.WebControls
+@model Jackson.Home.Models.EditPostViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_wgahAdminLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "WaiGuoAtHome", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>BlogPost</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Post.Title, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Post.Title)
+                            @Html.ValidationMessageFor(model => model.Post.Title)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Post.Post, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Post.Post)
+                            @Html.ValidationMessageFor(model => model.Post.Post)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Post.DateTime, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Post.DateTime)
+                            @Html.ValidationMessageFor(model => model.Post.DateTime)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Post.Tags, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.ListBoxFor(m=>m.PostTags, Model.TagList)})
+                          
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Post.Images, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="file" name="NewImage" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
