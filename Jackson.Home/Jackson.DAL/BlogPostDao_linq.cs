@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NDatabase;
-using NDatabase.Api;
-using Sqo;
+using System.Runtime.Remoting.Contexts;
 
 namespace Jackson.DAL
 {
@@ -16,19 +12,19 @@ namespace Jackson.DAL
 
         public BlogPostDao_linq()
         {
-            
             _db = new SiteDataContext();
-            
         }
 
-        public List<BlogPost> Get()
+        public List<BlogPost> GetAllPosts()
         {
+            var bp = _db.BlogPosts.ToList();
             return _db.BlogPosts.ToList();
         }
 
         public BlogPost Get(int id)
         {
-            return _db.BlogPosts.First(x => x.Id == id);
+            //why the hell will the images not load?
+            return _db.BlogPosts.Include(x=>x.Images).First(x => x.Id == id);
             
         }
 
@@ -39,14 +35,23 @@ namespace Jackson.DAL
 
         public BlogPost GetMostRecent()
         {
-            return _db.BlogPosts.OrderByDescending(x => x.DateTime).First();
+            return _db.BlogPosts.FirstOrDefault();
         }
 
         public BlogPost Create(BlogPost blogPost)
         {
-            _db.BlogPosts.Add(blogPost);
+          blogPost = _db.BlogPosts.Add(blogPost);
+
+            var tags = new List<PostTag>();
+            if (blogPost.Tags != null)
+            {
+                tags.AddRange(blogPost.Tags.Select(tag => (GetTagById(tag.Id))));
+            }
+            blogPost.Tags = tags;
+           
             _db.SaveChanges();
-            return blogPost;
+
+            return Update(blogPost);
         }
 
         public BlogPost Update(BlogPost blogPost)
@@ -54,16 +59,30 @@ namespace Jackson.DAL
             var post =_db.BlogPosts.First(x => x.Id == blogPost.Id);
            
             post.DateTime = blogPost.DateTime;
-            post.Images = blogPost.Images;
-            post.Post = blogPost.Post;
-            post.Tags = blogPost.Tags;
             post.Title = blogPost.Title;
+            post.Post = blogPost.Post;
+          
+
+            List<PostTag> tags = new List<PostTag>();
+            foreach (var tag in blogPost.Tags)
+            {
+                if (!post.Tags.Contains(tag))
+                {
+                  post.Tags.Add(GetTagById(tag.Id));
+                }
+            }
+            
             
             _db.SaveChanges();
 
 
 
             return blogPost;
+        }
+
+        private PostTag GetTagById(int id)
+        {
+          return _db.Tags.FirstOrDefault(x => x.Id == id);
         }
 
         public void Delete(BlogPost blogPost)
@@ -74,7 +93,9 @@ namespace Jackson.DAL
 
         public List<PostTag> GetAllTags()
         {
-           return _db.Tags.ToList();
+            var list = _db.Tags.Where(x=>x.Tag !=null).ToList();
+            
+            return list;
         }
 
         public void DeleteImage(int id)
@@ -85,6 +106,27 @@ namespace Jackson.DAL
             });
             
             _db.SaveChanges();
+        }
+
+        public List<PostImage> GetImagesForDate(DateTime date)
+
+        {
+            return _db.Images.Where(x => DbFunctions.TruncateTime(x.DateTime) == date.Date).ToList();
+        }
+
+        public byte[] GetDefaultImage()
+        {
+            var firstOrDefault = _db.Images.FirstOrDefault();
+            if (firstOrDefault != null) return firstOrDefault.Image;
+
+            else { throw new Exception("There are no images in the database");}
+        }
+
+        public PostImage AddImage(PostImage image)
+        {
+             image = _db.Images.Add(image);
+            _db.SaveChanges();
+            return image;
         }
     }
 }

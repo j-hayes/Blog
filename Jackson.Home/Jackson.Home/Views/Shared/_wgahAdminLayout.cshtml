@@ -6,20 +6,31 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/social-buttons-3.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-2.1.0.js"></script>
+    
     <script type="text/javascript" src="~/Scripts/tinymce/tinymce.js"></script> 
+    
+    
     <script type="text/javascript">
         tinymce.init({
             selector: "textarea",
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste"
+                "insertdatetime media table  contextmenu paste"
             ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            external_plugins: { "nanospell": "plugins/nanospell/plugin.js" },
+            nanospell_server: "asp.net" // choose "php" "asp" "asp.net" or "java"
         });
     </script>
+    <link href="~/Content/bootstrap-switch/bootstrap3/bootstrap-switch.css" rel="stylesheet">
+    <script type="text/javascript" src="~/Scripts/bootstrap-switch.js"></script>
+
     <style type="text/css">
         html {
             width: auto;
@@ -97,7 +108,7 @@
             width: 100%;
         }
     </style>
-
+   
 </head>
 
 <body>
@@ -106,9 +117,10 @@
     </div>
     <hr />
     <footer class="modal-footer">
+       
         <p>&copy; John Joseph Hayes, Jr. @System.DateTime.Now.ToString("yyyy")</p>
     </footer>
-
+    
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

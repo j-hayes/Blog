@@ -39,9 +39,13 @@
             @Html.DisplayFor(modelItem => item.DateTime)
         </td>
         <td>
-            @foreach (var tag in item.Tags)
-            {
-                Html.Raw(tag + "; ");
+            @{
+                string s = "";
+                foreach (var tag in item.Tags)
+                {
+                    s += tag.Tag + ";";
+                }
+                <div>@s</div>
             }
            
         </td>

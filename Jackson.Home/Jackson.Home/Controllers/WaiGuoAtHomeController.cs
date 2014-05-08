@@ -7,7 +7,9 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Jackson.DAL;
+using Jackson.Home.Helpers;
 using Jackson.Home.Models;
+using Microsoft.Ajax.Utilities;
 using BlogPost = Jackson.DAL.BlogPost;
 
 namespace Jackson.Home.Controllers
@@ -18,7 +20,7 @@ namespace Jackson.Home.Controllers
 
         public WaiGuoAtHomeController()
         {
-            _blogPostDao = new BlogPostDao_linq();
+            _blogPostDao = new BlogPostDao_linq();//
         }
 
         //
@@ -29,7 +31,7 @@ namespace Jackson.Home.Controllers
 
             _blogPostDao = new BlogPostDao_linq();
 
-            List<BlogPost> blogPosts = _blogPostDao.Get().ToList();
+            List<BlogPost> blogPosts = _blogPostDao.GetAllPosts().ToList();
 
 
             return View(blogPosts);
@@ -43,41 +45,68 @@ namespace Jackson.Home.Controllers
 
         public ActionResult Create()
         {
+            var viewModel = GetNewEditPostViewModel();
 
-
-            EditPostViewModel viewModel = new EditPostViewModel
-            {
-                PostTags = _blogPostDao.GetAllTags(),
-                Post = new BlogPost {DateTime = DateTime.Now}
-            };
-
-            viewModel.TagList = new List<SelectListItem>();
-
-            foreach (var postTag in viewModel.PostTags)
-            {
-                viewModel.TagList.Add(new SelectListItem()
-                {
-                    Value = postTag.Id.ToString(),
-                    Text = postTag.Tag
-                });
-            }
 
             //viewModel.SelectedListTags = new List<SelectListItem>();
-
-
             return View(viewModel);
         }
 
+        
 
 
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(EditPostViewModel viewModel, FormCollection collection, HttpPostedFileBase NewImage)
         {
-            string s = collection["PostTags"];
+            if (viewModel.Post.Id != 0)
+            {
+                return Edit(viewModel, collection, NewImage);
+            }
+            else
+            {
 
-            string[] tagStrings = s.Split(',');
+                string s = collection["SelectedTagIds"];
+            if (!string.IsNullOrEmpty(s))
+            {
+                string[] tagStrings = s.Split(',');
 
+                viewModel.Post.Tags = new List<PostTag>();
+                foreach (string tagString in tagStrings)
+                {
+                    viewModel.Post.Tags.Add(new PostTag()
+                    {
+                        Id = Int32.Parse(tagString)
+                    });
+
+                }
+            }
+            if (NewImage != null)
+            {
+                viewModel.Post.Images = new List<PostImage>();
+                var image = PostImageBuilder.CreateFromPostedFile(NewImage);
+                image.Caption = "";
+                viewModel.Post.Images.Add(image);
+                
+            }
+
+           
+
+            _blogPostDao.Create(viewModel.Post);
+            return RedirectToAction("Admin");
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Edit(EditPostViewModel viewModel, FormCollection collection, HttpPostedFileBase NewImage)
+        {
+            string s = collection["SelectedTagIds"];
+            if (!string.IsNullOrEmpty(s))
+            {
+                string[] tagStrings = s.Split(',');
+            
             viewModel.Post.Tags = new List<PostTag>();
             foreach (string tagString in tagStrings)
             {
@@ -87,37 +116,51 @@ namespace Jackson.Home.Controllers
                 });
 
             }
+            }
+            if (NewImage != null) 
+            { 
+                UploadPicture(NewImage);  
+            }
 
-            var binaryReader = new BinaryReader(NewImage.InputStream);
-
-            var fileData = binaryReader.ReadBytes(NewImage.ContentLength);
-
-
-            PostImage image = new PostImage {Image = fileData};
-            viewModel.Post.Images.Add(image);
-            _blogPostDao.Create(viewModel.Post);
+            //todo: add an imamge to the DB without going through a post
+            
+            _blogPostDao.Update(viewModel.Post);
             return RedirectToAction("Admin");
 
         }
+
+       
 
         public ActionResult Edit(int id)
         {
-            return View(_blogPostDao.Get(id));
+
+             EditPostViewModel viewModel = new EditPostViewModel
+            {
+                Post = _blogPostDao.Get(id),
+                EligiableTagList = new List<SelectListItem>()
+             
+            };
+
+          
+            viewModel.SelectedTagIds = viewModel.Post.Tags.Where(x => x.Id > 0).Select(z => z.Id).ToArray();
+        
+            
+            foreach (var postTag in _blogPostDao.GetAllTags())
+            {
+                viewModel.EligiableTagList.Add(new SelectListItem()
+                {
+                    Value = postTag.Id.ToString(),
+                    Text = postTag.Tag, 
+                   
+                     });
+            }
+     
+
+     
+
+            return View(viewModel);
         }
-
-        [HttpPost]
-        public ActionResult Edit(BlogPost blogPost, FormCollection collection, HttpPostedFileBase NewImage)
-        {
-
-            //   blogPost.Images.Add(NewImage);
-            _blogPostDao.Update(blogPost);
-
-
-
-            return RedirectToAction("Admin");
-
-        }
-
+   
 
         public ActionResult Delete(int id)
         {
@@ -125,12 +168,50 @@ namespace Jackson.Home.Controllers
             return RedirectToAction("Admin");
         }
 
-      
+        public ActionResult AddPhoto()
+        {
+            var addPhotoViewModel = new AddPhotoViewModel();
+            return View(addPhotoViewModel);
+        }
+        
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult AddPhoto(AddPhotoViewModel viewModel, HttpPostedFileBase NewImage)
 
+        {
+            var image = UploadPicture(NewImage);
+
+            viewModel.Image = image;
+            viewModel.Message = "Image Below successfully uploaded";
+            return View(viewModel);
+        }
+
+
+        private EditPostViewModel GetNewEditPostViewModel()
+        {
+            EditPostViewModel viewModel = EditViewModelFactory.GetNewEditPostViewModel();
+
+            return viewModel;
+        }
+
+        //probably not necessary any more
         public ActionResult DeleteImage(int id, int returnEditId)
         {
-            _blogPostDao.DeleteImage(id);
-            return View("ImagesForPost", _blogPostDao.Get(returnEditId).Images);
+            throw new NotImplementedException();
+            
+            
+        }
+
+
+        private PostImage UploadPicture(HttpPostedFileBase NewImage)
+        {
+            var binaryReader = new BinaryReader(NewImage.InputStream);
+            var fileData = binaryReader.ReadBytes(NewImage.ContentLength);
+
+
+            PostImage image = new PostImage { Image = fileData, DateTime = DateTime.Now };
+
+            return _blogPostDao.AddImage(image);
         }
     }
 

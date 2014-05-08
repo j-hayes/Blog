@@ -9,10 +9,11 @@ namespace Jackson.Home.Models
 {
     public class EditPostViewModel
     {
-
         public BlogPost Post { get; set; }
-        public List<PostTag> PostTags { get; set; } 
-        public List<SelectListItem> TagList { get; set; }
-
+        public List<PostTag> SelectedTags { get; set; } 
+        public List<SelectListItem> EligiableTagList { get; set; }
+        public List<PostImage> Images { get; set; }
+        public int[] SelectedTagIds { get; set; }
     }
+    
 }

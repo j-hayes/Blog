@@ -12,7 +12,7 @@ namespace Jackson.DAL
         /*
          Gets all Posts
          */
-        List<BlogPost> Get();
+        List<BlogPost> GetAllPosts();
         BlogPost Get(int id);
         /*
          Get all posts for a Date
@@ -29,5 +29,8 @@ namespace Jackson.DAL
 
         List<PostTag> GetAllTags();
         void DeleteImage(int id);
+        List<PostImage> GetImagesForDate(DateTime Date);
+        byte[] GetDefaultImage();
+        PostImage AddImage(PostImage image);
     }
 }

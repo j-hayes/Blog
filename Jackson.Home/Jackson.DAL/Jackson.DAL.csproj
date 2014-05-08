@@ -30,20 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="NDatabase3">
-      <HintPath>..\packages\NDatabase.3.8.0\lib\net45\NDatabase3.dll</HintPath>
-    </Reference>
-    <Reference Include="Siaqodb">
-      <HintPath>..\packages\Siaqodb.4.0.0.7\lib\net45\Siaqodb.dll</HintPath>
-    </Reference>
-    <Reference Include="SiaqodbPortable">
-      <HintPath>..\packages\Siaqodb.4.0.0.7\lib\net45\SiaqodbPortable.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -60,28 +53,23 @@
   <ItemGroup>
     <Compile Include="BlogPost.cs" />
     <Compile Include="BlogPostDao_linq.cs" />
+    <Compile Include="FlashCard.cs" />
+    <Compile Include="FlashCardSet.cs" />
     <Compile Include="IBlogPostDao.cs" />
-    <Compile Include="Migrations\201402282235047_InitialCreate.cs" />
-    <Compile Include="Migrations\201402282235047_InitialCreate.Designer.cs">
-      <DependentUpon>201402282235047_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201404061926382_InitialCreate.cs" />
+    <Compile Include="Migrations\201404061926382_InitialCreate.Designer.cs">
+      <DependentUpon>201404061926382_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201403040400082_UpdateModelwithBLOGImage.cs" />
-    <Compile Include="Migrations\201403040400082_UpdateModelwithBLOGImage.Designer.cs">
-      <DependentUpon>201403040400082_UpdateModelwithBLOGImage.cs</DependentUpon>
+    <Compile Include="Migrations\201404062336097_AddBooleanToPostIsJornal.cs" />
+    <Compile Include="Migrations\201404062336097_AddBooleanToPostIsJornal.Designer.cs">
+      <DependentUpon>201404062336097_AddBooleanToPostIsJornal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201403101807079_postwithimages.cs" />
-    <Compile Include="Migrations\201403101807079_postwithimages.Designer.cs">
-      <DependentUpon>201403101807079_postwithimages.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403101810479_postwithimages1.cs" />
-    <Compile Include="Migrations\201403101810479_postwithimages1.Designer.cs">
-      <DependentUpon>201403101810479_postwithimages1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403101819287_postwithimages2.cs" />
-    <Compile Include="Migrations\201403101819287_postwithimages2.Designer.cs">
-      <DependentUpon>201403101819287_postwithimages2.cs</DependentUpon>
+    <Compile Include="Migrations\201405080147062_associateImageWithPost.cs" />
+    <Compile Include="Migrations\201405080147062_associateImageWithPost.Designer.cs">
+      <DependentUpon>201405080147062_associateImageWithPost.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="PinyinFormatHelper.cs" />
     <Compile Include="PostImage.cs" />
     <Compile Include="PostTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,6 +79,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SiteDataContext.cs" />
+    <Compile Include="ToDoListItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -110,20 +99,14 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201402282235047_InitialCreate.resx">
-      <DependentUpon>201402282235047_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404061926382_InitialCreate.resx">
+      <DependentUpon>201404061926382_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403040400082_UpdateModelwithBLOGImage.resx">
-      <DependentUpon>201403040400082_UpdateModelwithBLOGImage.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404062336097_AddBooleanToPostIsJornal.resx">
+      <DependentUpon>201404062336097_AddBooleanToPostIsJornal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403101807079_postwithimages.resx">
-      <DependentUpon>201403101807079_postwithimages.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403101810479_postwithimages1.resx">
-      <DependentUpon>201403101810479_postwithimages1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403101819287_postwithimages2.resx">
-      <DependentUpon>201403101819287_postwithimages2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201405080147062_associateImageWithPost.resx">
+      <DependentUpon>201405080147062_associateImageWithPost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

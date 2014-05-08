@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NDatabase;
-using NDatabase.Api;
- using NDatabase.Oid;
 
 namespace Jackson.DAL
 {
@@ -11,16 +8,16 @@ namespace Jackson.DAL
         public int Id { get; set; }
         public string Title { get; set; }
         public string Post { get; set; }
-        public virtual List<PostImage> Images { get; set; }
-        public List<PostTag> Tags { get; set; }
+        public bool IsJornal { get; set; }
+        public virtual ICollection<PostTag> Tags { get; set; }
+        public virtual ICollection<PostImage> Images { get; set; }
         public DateTime DateTime { get; set; }
 
 
 
         public BlogPost()
         {
-            Tags = new List<PostTag>();
-            Images = new List<PostImage>();//this may mess stuff up in loading with the dbcontext
+          
         }
     }
 }
