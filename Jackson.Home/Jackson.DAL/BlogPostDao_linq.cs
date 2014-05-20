@@ -23,7 +23,7 @@ namespace Jackson.DAL
 
         public BlogPost Get(int id)
         {
-            //why the hell will the images not load?
+            
             return _db.BlogPosts.Include(x=>x.Images).First(x => x.Id == id);
             
         }
@@ -35,7 +35,7 @@ namespace Jackson.DAL
 
         public BlogPost GetMostRecent()
         {
-            return _db.BlogPosts.FirstOrDefault();
+            return _db.BlogPosts.OrderByDescending(x => x.DateTime).FirstOrDefault();
         }
 
         public BlogPost Create(BlogPost blogPost)
@@ -126,6 +126,12 @@ namespace Jackson.DAL
         {
              image = _db.Images.Add(image);
             _db.SaveChanges();
+            return image;
+        }
+
+        public PostImage GetImage(int id)
+        {
+            var image = _db.Images.FirstOrDefault(x => x.Id == id);
             return image;
         }
     }

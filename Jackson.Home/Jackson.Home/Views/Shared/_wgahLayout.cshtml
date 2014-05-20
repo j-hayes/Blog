@@ -6,99 +6,51 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/social-buttons-3.css" rel="stylesheet" />
-    <style type="text/css">
-        html {
-            width: auto;
-            overflow-x: hidden;
-        }
-
-        body {
-            padding-top: 0px;
-            padding-bottom: 40px;
-            width: auto;
-        }
-
-        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, ul, li, .text {
-            font-family: "Courier New", Courier, monospace;
-        }
-
-
-        /*Jackson added
-            */
-        .homeHeaderRow {
-            height: 500px;
-            width: 100%;
-            background-image: url('/Content/images/DanceYunnan.jpg');
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            color: white;
-        }
-
-        .homeHeadShot {
-            width: 100%;
-        }
-
-
-
-        .aboutMeRow {
-            padding-top: 50px;
-            background: white;
-            color: #0248ED;
-        }
-
-        .socialContainer {
-            background-color: white;
-            color: #f2f2f2;
-            padding-bottom: 10px;
-        }
-
-        .socialButton {
-            font-size: 14px;
-        }
-
-        .homeRow {
-        }
-
-        .homeMainContainer {
-            background: white;
-            padding-bottom: 10px;
-        }
-
-        .recentBlogRow {
-            background-color: #A2B7E8; /*FF4545;*/
-            color: white;
-            padding-bottom: 10px;
-        }
-
-        .flashCardProjectRow {
-            background-color: #BEA2E8;
-            color: white;
-            padding-bottom: 10px;
-        }
-
-        .projectScreenShotW8 {
-        }
-
-        .homePhoto100 {
-            width: 100%;
-        }
-    </style>
+    <link href="~/Content/Jackson.css" rel="stylesheet"/>
 
 </head>
 
-<body>
-    <div class="">
-        @RenderBody()
-    </div>
-    <hr />
-    <footer class="modal-footer">
-        <p>&copy; John Joseph Hayes, Jr. @System.DateTime.Now.ToString("yyyy")</p>
-    </footer>
+    <body>
+        
+        <div class="row blogPage ">
+            <div id="" class=" row BlogHeaderRow">
+                <div id="" class="col-xs-12 col-md-offset-2 col-md-8   ">
+                    <div class="container">
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
+
+                        <br />
+                        <br />
+                        <br />
+                        <div class="col-xs-1 col-md-3">
+                            <img class="img-responsive" src="/Content/images/headShot1.jpg" />
+                        </div>
+                        <div class="col-xs-11 col-md-6 ">
+                            <h1>Wai Guo Abroad! </h1>
+                            <h3>the Ramblings about rambling around of Jackson Hayes </h3>
+                            <h3>子曰。学而不思则罔、思而不学则殆</h3>
+
+                        </div>
+
+                    </div>
+                    <br />
+                </div>
+
+            </div>
+            <br />
+            <div class="body">
+                @RenderBody()
+            </div>
+        </div>
+            <footer class="modal-footer row">
+                <p>&copy; John Joseph Hayes, Jr. @System.DateTime.Now.ToString("yyyy")</p>
+            </footer>
+
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)
+    
+    </body>
 </html>

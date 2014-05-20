@@ -32,5 +32,6 @@ namespace Jackson.DAL
         List<PostImage> GetImagesForDate(DateTime Date);
         byte[] GetDefaultImage();
         PostImage AddImage(PostImage image);
+        PostImage GetImage(int id);
     }
 }
