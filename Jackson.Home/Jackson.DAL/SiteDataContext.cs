@@ -11,9 +11,11 @@ namespace Jackson.DAL
         public DbSet<PostImage> Images { get; set; }
 
 
-        public SiteDataContext() 
+        public SiteDataContext()
+            : base("name=SiteDataContext") 
         { 
             this.Configuration.LazyLoadingEnabled = true; 
+            
         } 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

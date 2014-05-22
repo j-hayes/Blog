@@ -279,11 +279,15 @@ namespace Jackson.Home.Controllers
         //probably not necessary any more
         public ActionResult DeleteImage(int id, int returnEditId)
         {
-            throw new NotImplementedException();
-            
-            
+            _blogPostDao.DeleteImage(id);
+
+            return RedirectToAction("ManageImages");
         }
 
+        public ActionResult ManageImages()
+        {//todo: build ProxyImage class
+           return View( _blogPostDao.GetImagesForMonth(DateTime.Now.Month));
+        }
 
         private PostImage UploadPicture(HttpPostedFileBase NewImage, string caption)
         {
@@ -294,6 +298,11 @@ namespace Jackson.Home.Controllers
             PostImage image = new PostImage { Image = fileData, DateTime = DateTime.Now, Caption = caption};
 
             return _blogPostDao.AddImage(image);
+        }
+
+        public ActionResult EditImage(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 

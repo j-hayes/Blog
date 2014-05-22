@@ -33,5 +33,6 @@ namespace Jackson.DAL
         byte[] GetDefaultImage();
         PostImage AddImage(PostImage image);
         PostImage GetImage(int id);
+        List<PostImage> GetImagesForMonth(int month);
     }
 }

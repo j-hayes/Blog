@@ -134,5 +134,10 @@ namespace Jackson.DAL
             var image = _db.Images.FirstOrDefault(x => x.Id == id);
             return image;
         }
+
+        public List<PostImage> GetImagesForMonth(int month)
+        {
+           return _db.Images.Where(x => x.DateTime.Month == month).ToList();
+        }
     }
 }
