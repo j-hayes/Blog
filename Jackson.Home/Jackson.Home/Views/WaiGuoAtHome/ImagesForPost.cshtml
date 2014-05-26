@@ -4,6 +4,6 @@
     @foreach (var img in Model)
     {
         <img class="img-responsive img-rounded homePhoto100" src="data:image;base64, @System.Convert.ToBase64String(img.Image)" />
-        @Html.ActionLink("Delete", "DeleteImage", new{id=img.Id})
+   
     }
 </div>

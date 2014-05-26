@@ -33,6 +33,9 @@ namespace Jackson.DAL
         byte[] GetDefaultImage();
         PostImage AddImage(PostImage image);
         PostImage GetImage(int id);
-        List<PostImage> GetImagesForMonth(int month);
+        List<PostImage> GetImagesForMonth(DateTime date);
+        BlogPost GetNextPublicPost(int id);
+        BlogPost GetPreviousPublicPost(int id);
+
     }
 }

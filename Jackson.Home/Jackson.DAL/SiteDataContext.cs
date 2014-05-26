@@ -12,7 +12,8 @@ namespace Jackson.DAL
 
 
         public SiteDataContext()
-            : base("name=SiteDataContext") 
+           // : base("name=SiteDataContext") 
+            : base("name=LocalDataContext") 
         { 
             this.Configuration.LazyLoadingEnabled = true; 
             

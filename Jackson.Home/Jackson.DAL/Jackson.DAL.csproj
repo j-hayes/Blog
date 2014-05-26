@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="BlogPost.cs" />
     <Compile Include="BlogPostDao_linq.cs" />
+    <Compile Include="DaoError.cs" />
     <Compile Include="FlashCard.cs" />
     <Compile Include="FlashCardSet.cs" />
     <Compile Include="IBlogPostDao.cs" />

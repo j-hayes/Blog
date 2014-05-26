@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using Antlr.Runtime.Tree;
 using ImageResizer;
+using ImageResizer.Caching;
 using Jackson.DAL;
 using Jackson.Home.Helpers;
 using Jackson.Home.Models;
@@ -21,7 +24,7 @@ namespace Jackson.Home.Controllers
 
         public WaiGuoAtHomeController()
         {
-            _blogPostDao = new BlogPostDao_linq();//
+            _blogPostDao = new BlogPostDao_linq(); //
         }
 
         public ActionResult Index()
@@ -32,51 +35,43 @@ namespace Jackson.Home.Controllers
             return View(viewmodel);
         }
 
-
-        
-
         [HttpGet]
-        public ActionResult Post(int? id, int? direction)
+        public ActionResult Post(int id)
         {
+            return View(_blogPostDao.Get(id));
+        }
+    
+
+        public ActionResult Previous(FormCollection collection)
+        {
+            int postId = Int32.Parse(collection["postId"]);
+       
             try
             {
-                if (id != null)
-                {
-                    var viewModel = _blogPostDao.Get(id.Value);
-                    if (viewModel.IsJornal) //block showing journal entires and skipping to next post
-                    {
-                        var nextId = id + 1*(direction ?? 1);
-                        return Post(nextId,direction??1);
-                    }
-                    viewModel = GetAndResizeImages(viewModel);
-
-                    return View(viewModel);
-                }
-                else
-                {
-                  return RedirectToAction("Index");
-                }
-            }
-            catch (System.InvalidOperationException e)
-            {
-                return View("Oops", new ErrorViewModel()
-                {
-                    Message = String.Format("No Post With {0} Id Found", id.Value)
                 
-                });
+                return Redirect("~/WaiGuoAtHome/Post/" + _blogPostDao.GetPreviousPublicPost(postId).Id);
+            }
+            catch (DaoException e)
+            {
+                return Redirect("~/WaiGuoAtHome/Post/" + postId+"?isEariest=true");
             }
 
             
         }
-        [HttpPost]
-        public ActionResult Post(FormCollection collection)
+
+        public ActionResult Next(FormCollection collection)
         {
             int postId = Int32.Parse(collection["postId"]);
-            int direction = Int32.Parse(collection["direction"]);
 
-
-
-            return Post(postId, direction);
+            try
+            {
+             int id =   _blogPostDao.GetNextPublicPost(postId).Id;
+                return Redirect("~/WaiGuoAtHome/Post/" + id);
+            }
+            catch (DaoException e)
+            {
+                return Redirect("~/WaiGuoAtHome/Post/" + postId + "?isNewest=true");
+            }
         }
 
         private BlogPost GetAndResizeImages(BlogPost viewmodel)
@@ -87,25 +82,74 @@ namespace Jackson.Home.Controllers
             }
             foreach (var postImage in viewmodel.Images)
             {
-                using (var outStream = new MemoryStream())
-                {
-                    using (var inStream = new MemoryStream(postImage.Image))
-                    {
-                        var settings = new ResizeSettings("maxwidth=1000&maxheight=1000");
-                        ImageResizer.ImageBuilder.Current.Build(inStream, outStream, settings);
-                        postImage.Image = outStream.ToArray();
-                        //   return new FileContentResult(outBytes, "image/jpeg");
-                    }
-                }
+                var outStream = ReizeImage(postImage);
                 
             }
             return viewmodel;
+        }
+
+        private static MemoryStream ReizeImage(PostImage postImage)
+        {
+            return ResizeImage(postImage, 1000, 1000);
+        }
+
+
+
+        private static MemoryStream ResizeImage(PostImage postImage, int height , int width)
+        {
+            MemoryStream outStream;
+            using (outStream = new MemoryStream())
+            {
+                using (var inStream = new MemoryStream(postImage.Image))
+                {
+                    var settings = new ResizeSettings("maxwidth="+width+"&maxheight="+height);
+                    ImageResizer.ImageBuilder.Current.Build(inStream, outStream, settings);
+                    postImage.Image = outStream.ToArray();
+                    //   return new FileContentResult(outBytes, "image/jpeg");
+                }
+            }
+            return outStream;
         }
 
         public ActionResult Image(int id)
         {
             PostImage viewModel = _blogPostDao.GetImage(id);
             return View(viewModel);
+        }
+
+        public ActionResult Images(string dateString) //actualy date number MMYYYY
+        {
+            try
+            {
+                int month;
+                int year;
+                if (string.IsNullOrWhiteSpace(dateString))
+                {
+                     month = DateTime.Now.Month;
+                     year = DateTime.Now.Year;
+                }
+                else
+                {
+                     month = Int32.Parse(dateString.Substring(0, 2));
+                     year = Int32.Parse(dateString.Substring(2, 4));
+                }
+                 DateTime date = new DateTime(year, month, 1);
+
+                var viewModel = _blogPostDao.GetImagesForMonth(date);
+                foreach (var postImage in viewModel)
+                {
+                    ResizeImage(postImage, 500, 250);
+                }
+
+                return View(viewModel);
+            }
+            catch (Exception e)
+            {
+                return View("Oops",
+                    new ErrorViewModel() {Message = "Date is formatted incorrectly in URL it should be MMYY"});
+            }
+
+
         }
 
         //
@@ -211,8 +255,6 @@ namespace Jackson.Home.Controllers
 
         }
 
-       
-
         public ActionResult Edit(int id)
         {
 
@@ -236,10 +278,6 @@ namespace Jackson.Home.Controllers
                    
                      });
             }
-     
-
-     
-
             return View(viewModel);
         }
    
@@ -286,7 +324,7 @@ namespace Jackson.Home.Controllers
 
         public ActionResult ManageImages()
         {//todo: build ProxyImage class
-           return View( _blogPostDao.GetImagesForMonth(DateTime.Now.Month));
+           return View( _blogPostDao.GetImagesForMonth(DateTime.Now));
         }
 
         private PostImage UploadPicture(HttpPostedFileBase NewImage, string caption)
@@ -304,6 +342,8 @@ namespace Jackson.Home.Controllers
         {
             throw new NotImplementedException();
         }
+
+        
     }
 
 }

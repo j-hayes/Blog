@@ -70,13 +70,21 @@
 
 <div class="recentBlogRow homeRow row">
     <div class="container">
-        <h3>Wai Guo is abroad!</h3>
+        <div class="row">
+            <div class="col-xs-4">
+                <h3>Wai Guo is abroad!</h3>
+            </div>
+            <div class="col-xs-3 col-xs-offset-4">
+                <br/>
+                <a href="~/WaiGuoAtHome/" class="btn btn-github socialButton"><i class="fa fa-book"></i> | More Ramblings</a>
+            </div>
+        </div>
         <div class="col-xs-12 col-md-offset-2 col-md-8">
             <div class="row" style="min-height: 500px;">
-              
+
                 <h4>@Model.MostRecentBlogPost.Title</h4>
                 <div class="col-xs-4 col-md-4">
-                       
+
                     @if (Model.ImageForPost != null)
                     {
                         <img class="img-responsive img-rounded homePhoto100" src="data:image;base64, @Convert.ToBase64String(Model.ImageForPost)" />
@@ -88,15 +96,7 @@
                 </div>
 
             </div>
-            <div class="row" style="padding-top: 10px;">
-                <div class="col-xs-3"><a href="~/WaiGuoAtHome/" class="btn btn-github socialButton"><i class="fa fa-book"></i> | More Ramblings</a></div>
-            </div>
-            <div class="row">
-                <h3>Daily 4 character idiom</h3>
-                <script type="text/javascript" src="http://www.chinese-tools.com/scripts/chengyuoftheday.js"></script>
-            </div>
         </div>
-        
     </div>
 </div>
 
