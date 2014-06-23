@@ -19,8 +19,8 @@ namespace Jackson.DAL
 
         public List<BlogPost> GetAllPosts()
         {
-            var bp = _db.BlogPosts.ToList();
-            return _db.BlogPosts.ToList();
+            
+            return _db.BlogPosts.OrderByDescending(x=>x.DateTime).ToList();
         }
 
         public BlogPost Get(int id)
@@ -63,6 +63,7 @@ namespace Jackson.DAL
             post.DateTime = blogPost.DateTime;
             post.Title = blogPost.Title;
             post.Post = blogPost.Post;
+            post.IsJornal = blogPost.IsJornal;
 
 
             List<PostTag> tags = new List<PostTag>();
@@ -113,7 +114,7 @@ namespace Jackson.DAL
         public List<PostImage> GetImagesForDate(DateTime date)
 
         {
-            return _db.Images.Where(x => DbFunctions.TruncateTime(x.DateTime) == date.Date).ToList();
+            return _db.Images.Where(x => DbFunctions.TruncateTime(x.DateTime) == date.Date).OrderByDescending(x=>x.DateTime).ToList();
         }
 
         public byte[] GetDefaultImage()
@@ -142,7 +143,7 @@ namespace Jackson.DAL
 
         public List<PostImage> GetImagesForMonth(DateTime date)
         {
-            return _db.Images.Where(x => x.DateTime.Month == date.Month).ToList();
+            return _db.Images.Where(x => x.DateTime.Month == date.Month).OrderByDescending(x=>x.DateTime).ToList();
         }
 
         public BlogPost GetNextPublicPost(int id)
@@ -184,5 +185,9 @@ namespace Jackson.DAL
 
         }
 
+        public BlogPost GetAny(int id)
+        {
+            return _db.BlogPosts.Include(x => x.Images).First(x => x.Id == id);
+        }
     }
 }

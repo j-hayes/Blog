@@ -37,5 +37,6 @@ namespace Jackson.DAL
         BlogPost GetNextPublicPost(int id);
         BlogPost GetPreviousPublicPost(int id);
 
+        BlogPost GetAny(int id);
     }
 }

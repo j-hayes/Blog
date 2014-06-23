@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ViewBag.Title - My ASP.NET Application</title>
+        <title>@ViewBag.Title</title>
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
         <link href="~/Content/font-awesome-4.1.0/css/font-awesome.css" rel="stylesheet" />
@@ -14,20 +14,24 @@
     </head>
 
     <body>
-        <div class="">
-            @RenderBody()
+        <div class="row">
+            <div id="" class="">
+                @RenderBody()
+            </div>
         </div>
+         
         <hr/>
-        <footer class="modal-footer">
-            <p>&copy; John Joseph Hayes, Jr. @System.DateTime.Now.ToString("yyyy")</p>
-            
-            <p>
-                Daily 4 character idiom
-                <script type="text/javascript" src="http://www.chinese-tools.com/scripts/chengyuoftheday.js"></script>
-            </p> 
-     
-        </footer>
+        <div class="container row">
+            <footer class=" row modal-footer">
+                <p>&copy; John Joseph Hayes, Jr. @System.DateTime.Now.ToString("yyyy")</p>
 
+                <p>
+                    Daily 4 character idiom
+                    <script type="text/javascript" src="http://www.chinese-tools.com/scripts/chengyuoftheday.js"></script>
+                </p>
+
+            </footer>
+        </div>
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)

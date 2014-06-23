@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.IO;
@@ -30,15 +31,19 @@ namespace Jackson.Home.Controllers
         public ActionResult Index()
         {
             var viewmodel = _blogPostDao.GetMostRecent();
-            viewmodel = GetAndResizeImages(viewmodel);
-
-            return View(viewmodel);
+            ViewBag.Title = "WaiGuoAtHome";
+            return View("Post", viewmodel);
         }
+
+     
 
         [HttpGet]
         public ActionResult Post(int id)
         {
-            return View(_blogPostDao.Get(id));
+            var viewModel = _blogPostDao.Get(id);
+            viewModel = GetAndResizeImages(viewModel);
+
+            return View(viewModel);
         }
     
 
@@ -117,44 +122,30 @@ namespace Jackson.Home.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Images(string dateString) //actualy date number MMYYYY
+        public ActionResult Images(int? id, int? month, int? day) // id== year in this case weird overloading routes thing
         {
-            try
+          
+           ImagesViewModel viewModel = GetImageForDate(id, month, day);
+          
+            foreach (PostImage postImage in viewModel.Images)
             {
-                int month;
-                int year;
-                if (string.IsNullOrWhiteSpace(dateString))
-                {
-                     month = DateTime.Now.Month;
-                     year = DateTime.Now.Year;
-                }
-                else
-                {
-                     month = Int32.Parse(dateString.Substring(0, 2));
-                     year = Int32.Parse(dateString.Substring(2, 4));
-                }
-                 DateTime date = new DateTime(year, month, 1);
-
-                var viewModel = _blogPostDao.GetImagesForMonth(date);
-                foreach (var postImage in viewModel)
-                {
-                    ResizeImage(postImage, 500, 250);
-                }
-
-                return View(viewModel);
+                postImage.Image = ResizeImage(postImage, 500, 250).GetBuffer();
             }
-            catch (Exception e)
-            {
-                return View("Oops",
-                    new ErrorViewModel() {Message = "Date is formatted incorrectly in URL it should be MMYY"});
-            }
-
-
+            return View(viewModel);
         }
 
-        //
-        // GET: /WaiGuoAtHome/
 
+        public ActionResult NextMonthsImages(DateTime date)
+        {
+            date = date.AddMonths(1);
+            return Redirect("~/WaiGuoAtHome/Images/" + date.Year +"/"+date.Month);
+        }
+        public ActionResult PreviousMonthsImages(DateTime date)
+        {
+            date = date.AddMonths(-1);
+            return Redirect("~/WaiGuoAtHome/Images/" + date.Year + "/" + date.Month);
+        }
+        
         public ActionResult Admin()
         {
 
@@ -260,7 +251,7 @@ namespace Jackson.Home.Controllers
 
              EditPostViewModel viewModel = new EditPostViewModel
             {
-                Post = _blogPostDao.Get(id),
+                Post = _blogPostDao.GetAny(id),
                 EligiableTagList = new List<SelectListItem>()
              
             };
@@ -284,7 +275,7 @@ namespace Jackson.Home.Controllers
 
         public ActionResult Delete(int id)
         {
-            _blogPostDao.Delete(_blogPostDao.Get(id));
+            _blogPostDao.Delete(_blogPostDao.GetAny(id));
             return RedirectToAction("Admin");
         }
 
@@ -301,7 +292,7 @@ namespace Jackson.Home.Controllers
         {
             var image = UploadPicture(NewImage, viewModel.Caption);
 
-            viewModel.Image = image;
+        //    viewModel.Image = image; when the internet is good uncomment
             viewModel.Message = "Image Below successfully uploaded";
             return View(viewModel);
         }
@@ -322,9 +313,12 @@ namespace Jackson.Home.Controllers
             return RedirectToAction("ManageImages");
         }
 
-        public ActionResult ManageImages()
+        public ActionResult ManageImages(int? id, int? month, int? day)
         {//todo: build ProxyImage class
-           return View( _blogPostDao.GetImagesForMonth(DateTime.Now));
+            ImagesViewModel viewModel = GetImageForDate(id, month, day);
+       
+            
+            return View( viewModel);
         }
 
         private PostImage UploadPicture(HttpPostedFileBase NewImage, string caption)
@@ -332,9 +326,7 @@ namespace Jackson.Home.Controllers
             var binaryReader = new BinaryReader(NewImage.InputStream);
             var fileData = binaryReader.ReadBytes(NewImage.ContentLength);
 
-
             PostImage image = new PostImage { Image = fileData, DateTime = DateTime.Now, Caption = caption};
-
             return _blogPostDao.AddImage(image);
         }
 
@@ -343,9 +335,43 @@ namespace Jackson.Home.Controllers
             throw new NotImplementedException();
         }
 
-        
-    }
+        private ImagesViewModel GetImageForDate(int? year, int? month, int? day)
+        {
+            var viewModel = new ImagesViewModel();
+            if (!year.HasValue)//default
+            {
+                year = DateTime.Now.Year;
+                month = DateTime.Now.Month;
+                viewModel.Images = _blogPostDao.GetImagesForMonth(new DateTime(year.Value, month.Value, 1));
+                viewModel.DateForImages = DateTime.Now;
+                viewModel.DisplayDateString = string.Format("{0}/{1}", year.Value, month.Value);
+            }
+            else
+            {
+                if (!month.HasValue)//year/
+                {
+                    month = 1;
+                    viewModel.DateForImages = new DateTime(year.Value, month.Value, 1);
+                    viewModel.Images = _blogPostDao.GetImagesForMonth(viewModel.DateForImages);
+                    viewModel.DisplayDateString = string.Format("{0}/{1}", year.Value, month.Value);
+                }
 
+                else if (day.HasValue)//year/month/day
+                {
+                    viewModel.DateForImages = new DateTime(year.Value, month.Value, day.Value);
+                    viewModel.Images = _blogPostDao.GetImagesForMonth(viewModel.DateForImages);
+                    viewModel.DisplayDateString = string.Format("{0}/{1}/{2}", year.Value, month.Value, day.Value);
+                }
+                else // year/month
+                {
+                    viewModel.DateForImages = new DateTime(year.Value, month.Value, 1);
+                    viewModel.Images = _blogPostDao.GetImagesForMonth(viewModel.DateForImages);
+                    viewModel.DisplayDateString = string.Format("{0}/{1}", year.Value, month.Value);
+                }
+            }
+            return viewModel;
+        }
+    }
 }
 
 
