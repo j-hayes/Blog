@@ -83,7 +83,7 @@ namespace Jackson.Home.Controllers
         {
             if (viewmodel.Images.Count < 1)
             {
-                viewmodel.Images = _blogPostDao.GetImagesForDate(viewmodel.DateTime);
+                viewmodel.Images = _blogPostDao.GetImagesForPost(viewmodel);
             }
             foreach (var postImage in viewmodel.Images)
             {
@@ -119,6 +119,12 @@ namespace Jackson.Home.Controllers
         public ActionResult Image(int id)
         {
             PostImage viewModel = _blogPostDao.GetImage(id);
+            return File(viewModel.Image,"img/jpg");
+        }
+
+        public ActionResult ImageHtml(int id)
+        {
+            PostImage viewModel = _blogPostDao.GetImage(id);
             return View(viewModel);
         }
 
@@ -126,7 +132,8 @@ namespace Jackson.Home.Controllers
         {
           
            ImagesViewModel viewModel = GetImageForDate(id, month, day);
-          
+            viewModel.Images = viewModel.Images.OrderByDescending(x => x.DateTime).ToList();
+            ViewBag.ImageDate = viewModel.Images.First().DateTime;
             foreach (PostImage postImage in viewModel.Images)
             {
                 postImage.Image = ResizeImage(postImage, 500, 250).GetBuffer();

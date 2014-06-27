@@ -29,7 +29,7 @@ namespace Jackson.DAL
 
         List<PostTag> GetAllTags();
         void DeleteImage(int id);
-        List<PostImage> GetImagesForDate(DateTime Date);
+        List<PostImage> GetImagesForPost(BlogPost blogPost);
         byte[] GetDefaultImage();
         PostImage AddImage(PostImage image);
         PostImage GetImage(int id);
@@ -38,5 +38,6 @@ namespace Jackson.DAL
         BlogPost GetPreviousPublicPost(int id);
 
         BlogPost GetAny(int id);
+        
     }
 }

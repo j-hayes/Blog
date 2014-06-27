@@ -111,10 +111,12 @@ namespace Jackson.DAL
             _db.SaveChanges();
         }
 
-        public List<PostImage> GetImagesForDate(DateTime date)
+        public List<PostImage> GetImagesForPost(BlogPost blogPost)
 
         {
-            return _db.Images.Where(x => DbFunctions.TruncateTime(x.DateTime) == date.Date).OrderByDescending(x=>x.DateTime).ToList();
+            var previousPostDate = GetPreviousPublicPost(blogPost.Id).DateTime;
+            return _db.Images.Where(x => x.DateTime > previousPostDate && x.DateTime < blogPost.DateTime).ToList();
+            //_db.Images.Where(x => DbFunctions.TruncateTime(x.DateTime) == date.Date).OrderByDescending(x=>x.DateTime).ToList();
         }
 
         public byte[] GetDefaultImage()
@@ -189,5 +191,7 @@ namespace Jackson.DAL
         {
             return _db.BlogPosts.Include(x => x.Images).First(x => x.Id == id);
         }
+
+        
     }
 }

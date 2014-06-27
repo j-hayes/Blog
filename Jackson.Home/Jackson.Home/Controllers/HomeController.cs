@@ -24,7 +24,7 @@ namespace Jackson.Home.Controllers
         {
             var mostRecentBlogPost = _blogPostDao.GetMostRecent();
             
-            var imageForPost = _blogPostDao.GetImagesForDate(mostRecentBlogPost.DateTime);
+            var imageForPost = _blogPostDao.GetImagesForPost(mostRecentBlogPost);
 
             var firstOrDefault = imageForPost.FirstOrDefault();
             if (firstOrDefault != null)

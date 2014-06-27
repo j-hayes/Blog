@@ -14,6 +14,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jackson.Service", "Jackson.Service\Jackson.Service.csproj", "{896C36F8-A204-4451-B219-507390B4F9B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jackson.LocalImageUploader", "WpfApplication1\Jackson.LocalImageUploader.csproj", "{7C717CDB-DDCD-4F0E-B394-69A53885376C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{896C36F8-A204-4451-B219-507390B4F9B3} = {896C36F8-A204-4451-B219-507390B4F9B3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

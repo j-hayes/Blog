@@ -15,6 +15,8 @@ namespace Jackson.Home.Models
         public List<PostImage> Images { get; set; }
         public int[] SelectedTagIds { get; set; }
         public string ImageCaption { get; set; }
+
+
     }
     
 }
